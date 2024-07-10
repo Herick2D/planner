@@ -1,6 +1,8 @@
 package com.herick.planner.trip;
 
+import com.herick.planner.participant.Participant;
 import com.herick.planner.participant.ParticipantCreateResponse;
+import com.herick.planner.participant.ParticipantData;
 import com.herick.planner.participant.ParticipantRequestPayload;
 import com.herick.planner.participant.ParticipantService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,4 +102,10 @@ public class TripController {
     return ResponseEntity.notFound().build();
   }
 
+  @GetMapping("/{tripId}/participants")
+  public ResponseEntity<List<ParticipantData>> getAllParticipants(@PathVariable UUID tripId){
+    List<ParticipantData> participantList = this.participantService.getAllParticipantsFromTrip(tripId);
+
+    return ResponseEntity.ok(participantList);
+  }
 }
