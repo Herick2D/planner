@@ -1,4 +1,4 @@
-package com.herick.planner.activities;
+package com.herick.planner.activity;
 
 import com.herick.planner.trip.Trip;
 import jakarta.persistence.Column;

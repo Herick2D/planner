@@ -1,4 +1,4 @@
-package com.herick.planner.activities;
+package com.herick.planner.activity;
 
 public record ActivityRequestPayload(String title, String occurs_at) {
 }

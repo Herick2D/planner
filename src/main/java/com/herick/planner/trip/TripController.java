@@ -1,9 +1,9 @@
 package com.herick.planner.trip;
 
-import com.herick.planner.activities.ActivityRequestPayload;
-import com.herick.planner.activities.ActivityResponse;
-import com.herick.planner.activities.ActivityService;
-import com.herick.planner.participant.Participant;
+import com.herick.planner.activity.ActivityData;
+import com.herick.planner.activity.ActivityRequestPayload;
+import com.herick.planner.activity.ActivityResponse;
+import com.herick.planner.activity.ActivityService;
 import com.herick.planner.participant.ParticipantCreateResponse;
 import com.herick.planner.participant.ParticipantData;
 import com.herick.planner.participant.ParticipantRequestPayload;
@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -127,6 +126,13 @@ public class TripController {
       return ResponseEntity.ok(activityResponse);
     }
     return ResponseEntity.notFound().build();
+  }
+
+  @GetMapping("/{tripId}/activities")
+  public ResponseEntity<List<ActivityData>> getAllActivities(@PathVariable UUID tripId){
+    List<ActivityData> activityDataList = this.activityService.getAllActivitiesFromId(tripId);
+
+    return ResponseEntity.ok(activityDataList);
   }
 
 }
