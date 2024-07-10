@@ -1,5 +1,8 @@
 package com.herick.planner.trip;
 
+import com.herick.planner.activities.ActivityRequestPayload;
+import com.herick.planner.activities.ActivityResponse;
+import com.herick.planner.activities.ActivityService;
 import com.herick.planner.participant.Participant;
 import com.herick.planner.participant.ParticipantCreateResponse;
 import com.herick.planner.participant.ParticipantData;
@@ -31,6 +34,9 @@ public class TripController {
 
   @Autowired
   private TripRepository repository;
+
+  @Autowired
+  private ActivityService activityService;
 
   @PostMapping
   public ResponseEntity<TripCreateResponse> createTrip(@RequestBody TripRequestPayload payload) {
@@ -87,7 +93,7 @@ public class TripController {
   }
 
   @PostMapping("/{tripId}/invite")
-  public ResponseEntity<ParticipantCreateResponse> something(@PathVariable UUID tripId, @RequestBody ParticipantRequestPayload payload) {
+  public ResponseEntity<ParticipantCreateResponse> inviteParticipant(@PathVariable UUID tripId, @RequestBody ParticipantRequestPayload payload) {
     Optional<Trip> trip = this.repository.findById(tripId);
 
     if(trip.isPresent()){
@@ -108,4 +114,19 @@ public class TripController {
 
     return ResponseEntity.ok(participantList);
   }
+
+  @PostMapping("/{tripId}/activities")
+  public ResponseEntity<ActivityResponse> registerActivity(@PathVariable UUID tripId, @RequestBody ActivityRequestPayload payload) {
+    Optional<Trip> trip = this.repository.findById(tripId);
+
+    if(trip.isPresent()){
+      Trip rawTrip = trip.get();
+
+      ActivityResponse activityResponse = this.activityService.registerActivity(payload, rawTrip);
+
+      return ResponseEntity.ok(activityResponse);
+    }
+    return ResponseEntity.notFound().build();
+  }
+
 }
