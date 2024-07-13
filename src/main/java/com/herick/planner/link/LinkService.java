@@ -1,11 +1,9 @@
 package com.herick.planner.link;
 
-import com.herick.planner.activity.ActivityData;
 import com.herick.planner.trip.Trip;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
